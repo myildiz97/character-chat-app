@@ -1,9 +1,9 @@
-import { Button } from "@/components/ui/button"
+import { LoginCard } from '@/components/auth/login-card';
 
 export default function Home() {
   return (
-    <div>
-      <Button>Click me</Button>
-    </div>
+    <main className="flex min-h-screen flex-col items-center justify-center p-24">
+      <LoginCard />
+    </main>
   )
 }
