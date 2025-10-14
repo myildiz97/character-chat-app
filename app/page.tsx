@@ -1,9 +1,5 @@
-import { LoginCard } from '@/components/auth/login-card';
+import HomePage from '@/components/pages/home-page';
 
 export default function Home() {
-  return (
-    <main className="flex min-h-screen flex-col items-center justify-center p-24">
-      <LoginCard />
-    </main>
-  )
+  return <HomePage />
 }
