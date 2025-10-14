@@ -13,7 +13,7 @@ export function RealtimeChatContainer({ characterId }: IRealtimeChatContainerPro
 
   useEffect(() => {
     const fetchMessages = async () => {
-      const endpoint= `/api/chat?characterId=${characterId}`
+      const endpoint= `/api/chat/${characterId}`
       const response = await fetch(endpoint, {
         method: "GET",
         headers: { "Content-Type": "application/json" },

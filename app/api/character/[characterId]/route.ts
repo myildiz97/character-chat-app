@@ -3,7 +3,10 @@ import { ICharacterDB } from '@/lib/types/character';
 import { createClient } from '@/utils/supabase/server';
 import { NextResponse } from 'next/server';
 
-export async function GET(request: Request) {
+export async function GET(
+  request: Request,
+  { params }: { params: { characterId: string } }
+) {
   const supabase = await createClient();
   const { data: { user }, error: authError } = await supabase.auth.getUser()
   if (authError || !user) {
@@ -13,16 +16,20 @@ export async function GET(request: Request) {
     )
   }
 
-  const { data: characters, error: charactersError } = await supabase
+  const { characterId } = await params;
+
+  const { data: character, error: characterError } = await supabase
     .from(CHARACTERS_TABLE)
     .select("*")
+    .eq("id", characterId)
+    .single()
 
-  if (charactersError) {
+  if (characterError || !character) {
     return NextResponse.json(
-      { error: "Failed to fetch characters" },
-      { status: 500 }
+      { error: "Character not found" },
+      { status: 404 }
     )
   }
 
-  return NextResponse.json(characters as ICharacterDB[])
+  return NextResponse.json(character as ICharacterDB)
 }

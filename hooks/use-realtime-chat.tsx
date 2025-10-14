@@ -39,11 +39,10 @@ export function useRealtimeChat({ characterId }: IUseRealtimeChatProps) {
     if (!channel || !isConnected) return;
 
     try {
-      const userResponse = await fetch("/api/chat", {
+      const userResponse = await fetch(`/api/chat/${characterId}`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          characterId: characterId,
           message: content,
           role: 'user',
         }),
@@ -63,7 +62,7 @@ export function useRealtimeChat({ characterId }: IUseRealtimeChatProps) {
 
       const newMessages: IChatMessage[] = [...messages, data];
 
-      const characterResponse = await fetch(`/api/character?characterId=${characterId}`);
+      const characterResponse = await fetch(`/api/character/${characterId}`);
       if (!characterResponse.ok) {
         throw new Error("Failed to fetch character")
       }
@@ -83,11 +82,10 @@ export function useRealtimeChat({ characterId }: IUseRealtimeChatProps) {
       const completion = await getGroqChatCompletion({ messages: messageHistory });
       const completionContent = completion.choices[0]?.message?.content || 'There was an error generating a response';
 
-      const assistantResponse = await fetch("/api/chat", {
+      const assistantResponse = await fetch(`/api/chat/${characterId}`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          characterId: characterId,
           message: completionContent,
           role: 'assistant',
         }),
