@@ -9,17 +9,20 @@ import { Button } from '../ui/button';
 import { Send } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { ChatMessageItem } from './chat-message-item';
+import { RealtimeChatHeader } from './realtime-chat-header';
+import { ICharacterDB } from '@/lib/types/character';
+import { RealtimeChatIntro } from './realtime-chat-intro';
 
 interface IRealtimeChatProps {
-  characterId: string;
+  character: ICharacterDB;
   messages?: IChatMessage[];
   onMessage?: (content: string) => void;
 }
 
-export function RealtimeChat({ characterId, messages: initialMessages = [], onMessage }: IRealtimeChatProps) {
+export function RealtimeChat({ character, messages: initialMessages = [], onMessage }: IRealtimeChatProps) {
   const { containerRef, scrollToBottom } = useChatScroll();
 
-  const { messages: realtimeMessages, sendMessage, isConnected } = useRealtimeChat({ characterId });
+  const { messages: realtimeMessages, sendMessage, isConnected } = useRealtimeChat({ characterId: character.id });
 
   const [newMessage, setNewMessage] = useState('');
 
@@ -51,8 +54,10 @@ export function RealtimeChat({ characterId, messages: initialMessages = [], onMe
 
   return (
     <div className="flex flex-col h-full w-full bg-background text-foreground antialiased">
+      <RealtimeChatHeader character={character} />
       {/* Messages */}
       <div ref={containerRef} className="flex-1 overflow-y-auto p-4 space-y-4">
+        <RealtimeChatIntro character={character} />
         {allMessages.length === 0 ? (
           <div className="text-center text-sm text-muted-foreground">
             No messages yet. Start the conversation!
@@ -61,7 +66,7 @@ export function RealtimeChat({ characterId, messages: initialMessages = [], onMe
         <div className="space-y-1">
           {allMessages.map((message, index) => {
             const prevMessage = index > 0 ? allMessages[index - 1] : null
-            const showHeader = !prevMessage || prevMessage?.user_id !== message?.user_id
+            const showHeader = !prevMessage || prevMessage?.role !== message?.role
             return (
               <div
                 key={message?.id}
@@ -69,6 +74,7 @@ export function RealtimeChat({ characterId, messages: initialMessages = [], onMe
                 >
                   <ChatMessageItem
                     message={message}
+                    character={character}
                     isOwnMessage={message.role === 'user'}
                     showHeader={showHeader}
                   />
