@@ -2,12 +2,13 @@ import { cn } from '@/lib/utils'
 import { IChatMessage } from '@/lib/types/chat'
 import { ICharacterDB } from '@/lib/types/character'
 import { useUserContext } from '../context/user-context'
+import LoadingThreeDotsJumping from '../shared/jumping-dots'
 
 interface ChatMessageItemProps {
-  message: IChatMessage
-  character: ICharacterDB
-  isOwnMessage: boolean
-  showHeader: boolean
+  message: IChatMessage;
+  character: ICharacterDB;
+  isOwnMessage: boolean;
+  showHeader: boolean;
 }
 
 export const ChatMessageItem = ({ message, character, isOwnMessage, showHeader }: ChatMessageItemProps) => {
@@ -48,6 +49,18 @@ const ChatMessageHeader = ({ message, isOwnMessage, character }: { message: ICha
           hour12: true,
         })}
       </span>
+    </div>
+  )
+}
+
+export const ChatMessageItemWaitingForResponse = () => {
+  return (
+    <div className="flex justify-start">
+      <div className="max-w-[75%] w-fit flex flex-col gap-1">
+        <div className="py-2 px-3 rounded-xl text-sm w-fit bg-muted text-foreground">
+          <LoadingThreeDotsJumping />
+        </div>
+      </div>
     </div>
   )
 }

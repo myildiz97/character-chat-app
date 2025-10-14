@@ -14,22 +14,6 @@ export function RealtimeChatContainer({ characterId }: IRealtimeChatContainerPro
   const [character, setCharacter] = useState<ICharacterDB | null>(null);
 
   useEffect(() => {
-    const fetchMessages = async () => {
-      const endpoint= `/api/chat/${characterId}`
-      const response = await fetch(endpoint, {
-        method: "GET",
-        headers: { "Content-Type": "application/json" },
-      });
-
-      if (!response.ok) {
-        throw new Error("Failed to fetch messages")
-      }
-
-      const data = await response.json();
-      setMessages(data.messages);
-    }
-    fetchMessages();
-
     const fetchCharacter = async () => {
       const endpoint= `/api/character/${characterId}`
       const response = await fetch(endpoint, {
@@ -45,12 +29,28 @@ export function RealtimeChatContainer({ characterId }: IRealtimeChatContainerPro
       setCharacter(data);
     }
     fetchCharacter();
+
+    const fetchMessages = async () => {
+      const endpoint= `/api/chat/${characterId}`
+      const response = await fetch(endpoint, {
+        method: "GET",
+        headers: { "Content-Type": "application/json" },
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to fetch messages")
+      }
+
+      const data = await response.json();
+      setMessages(data.messages);
+    }
+    fetchMessages();
   }, [characterId]);
 
   if (!character) {
     return <div>Loading...</div>
   }
-
+  
   return (
     <RealtimeChat
       character={character as ICharacterDB}

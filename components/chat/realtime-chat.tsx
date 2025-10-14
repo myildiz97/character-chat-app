@@ -4,14 +4,11 @@ import { useChatScroll } from '@/hooks/use-chat-scroll';
 import { useRealtimeChat } from '@/hooks/use-realtime-chat';
 import { IChatMessage } from '@/lib/types/chat';
 import { useCallback, useEffect, useMemo, useState } from 'react';
-import { Input } from '../ui/input';
-import { Button } from '../ui/button';
-import { Send } from 'lucide-react';
-import { cn } from '@/lib/utils';
-import { ChatMessageItem } from './chat-message-item';
+import { ChatMessageItem, ChatMessageItemWaitingForResponse } from './chat-message-item';
 import { RealtimeChatHeader } from './realtime-chat-header';
 import { ICharacterDB } from '@/lib/types/character';
 import { RealtimeChatIntro } from './realtime-chat-intro';
+import RealtimeChatInput from './realtime-chat-input';
 
 interface IRealtimeChatProps {
   character: ICharacterDB;
@@ -22,7 +19,7 @@ interface IRealtimeChatProps {
 export function RealtimeChat({ character, messages: initialMessages = [], onMessage }: IRealtimeChatProps) {
   const { containerRef, scrollToBottom } = useChatScroll();
 
-  const { messages: realtimeMessages, sendMessage, isConnected } = useRealtimeChat({ characterId: character.id });
+  const { messages: realtimeMessages, sendMessage, isConnected, waitingForResponse } = useRealtimeChat({ characterId: character.id });
 
   const [newMessage, setNewMessage] = useState('');
 
@@ -53,9 +50,8 @@ export function RealtimeChat({ character, messages: initialMessages = [], onMess
   )
 
   return (
-    <div className="flex flex-col h-full w-full bg-background text-foreground antialiased">
+    <div className="flex flex-col h-full w-full bg-background text-foreground antialiased overflow-hidden max-h-screen">
       <RealtimeChatHeader character={character} />
-      {/* Messages */}
       <div ref={containerRef} className="flex-1 overflow-y-auto p-4 space-y-4">
         <RealtimeChatIntro character={character} />
         {allMessages.length === 0 ? (
@@ -81,30 +77,16 @@ export function RealtimeChat({ character, messages: initialMessages = [], onMess
               </div>
                 )
             })}
+            {waitingForResponse && <ChatMessageItemWaitingForResponse />}
         </div>
       </div>
     
       <form onSubmit={handleSendMessage} className="flex w-full gap-2 border-t border-border p-4">
-        <Input
-          className={cn(
-            'rounded-full bg-background text-sm transition-all duration-300',
-            isConnected && newMessage.trim() ? 'w-[calc(100%-36px)]' : 'w-full'
-          )}
-          type="text"
+        <RealtimeChatInput
+          disabled={!isConnected || waitingForResponse}
           value={newMessage}
-          onChange={(e) => setNewMessage(e.target.value)}
-          placeholder="Type a message..."
-          disabled={!isConnected}
+          onChange={(value) => setNewMessage(value)}
         />
-        {isConnected && newMessage.trim() && (
-          <Button
-            className="aspect-square rounded-full animate-in fade-in slide-in-from-right-4 duration-300"
-            type="submit"
-            disabled={!isConnected}
-          >
-            <Send className="size-4" />
-          </Button>
-        )}
       </form>
     </div>
   )

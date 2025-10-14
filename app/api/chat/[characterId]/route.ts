@@ -1,4 +1,4 @@
-import { CHAT_MESSAGES_TABLE } from '@/lib/constants/chat';
+import { CHARACTERS_TABLE, CHAT_MESSAGES_TABLE } from '@/lib/constants/chat';
 import { IChatMessage } from '@/lib/types/chat';
 import { createClient } from '@/utils/supabase/server';
 import { NextResponse } from 'next/server';
@@ -33,9 +33,52 @@ export async function GET(
     )
   }
 
+  let messages = messageHistory;
+
+  if (messages.length === 0) {
+    const { data: character, error: characterError } = await supabase
+      .from(CHARACTERS_TABLE)
+      .select("*")
+      .eq("id", characterId)
+      .single()
+
+    if (characterError) {
+      console.error("Error fetching character:", characterError)
+    } else {
+      try {
+        const { data, error } = await supabase
+          .from(CHAT_MESSAGES_TABLE)
+          .insert({
+            user_id: user.id,
+            character_id: characterId,
+            role: 'assistant',
+            content: character.opening_message,
+          })
+          .select()
+          .single();
+    
+        if (error) {
+          console.error("Error saving message:", error)
+          return NextResponse.json(
+            { error: "Failed to save message" },
+            { status: 500 }
+          )
+        }
+    
+        messages = [data as IChatMessage];
+      } catch (error) {
+        console.error("Error saving message:", error)
+        return NextResponse.json(
+          { error: "Failed to save message" },
+          { status: 500 }
+        )
+      }
+    }
+  }
+
   return new Response(
     JSON.stringify({
-      messages: messageHistory,
+      messages,
       userId: user.id,
       characterId: characterId,
     }),

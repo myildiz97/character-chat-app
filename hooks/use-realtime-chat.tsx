@@ -1,3 +1,4 @@
+import { useUserContext } from '@/components/context/user-context';
 import { getGroqChatCompletion } from '@/lib/actions/groq-action';
 import { EVENT_CHAT_TYPE } from '@/lib/constants/chat';
 import { ICharacterDB } from '@/lib/types/character';
@@ -14,6 +15,9 @@ export function useRealtimeChat({ characterId }: IUseRealtimeChatProps) {
   const [messages, setMessages] = useState<IChatMessage[]>([]);
   const [channel, setChannel] = useState<ReturnType<typeof supabase.channel> | null>(null);
   const [isConnected, setIsConnected] = useState(false);
+  const [waitingForResponse, setWaitingForResponse] = useState(false);
+
+  const { user } = useUserContext();
 
   useEffect(() => {
     const newChannel = supabase.channel(`chat:${characterId}`);
@@ -36,9 +40,22 @@ export function useRealtimeChat({ characterId }: IUseRealtimeChatProps) {
   }, [characterId, supabase]);
 
   const sendMessage = useCallback(async (content: string) => {
-    if (!channel || !isConnected) return;
+    if (!channel || !isConnected || !user) return;
+
+    const userMessage: IChatMessage = {
+      id: crypto.randomUUID(),
+      user_id: user.id,
+      character_id: characterId,
+      role: 'user',
+      content: content,
+      created_at: new Date().toISOString(),
+    }
+
+    setMessages((prev) => [...prev, userMessage]);
 
     try {
+      setWaitingForResponse(true);
+
       const userResponse = await fetch(`/api/chat/${characterId}`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -105,10 +122,12 @@ export function useRealtimeChat({ characterId }: IUseRealtimeChatProps) {
       });
 
       setMessages(newMessages);
+      setWaitingForResponse(false);
     } catch (error) {
       console.error(error);
+      setWaitingForResponse(false);
     }
-  }, [characterId, isConnected, messages, channel]);
+  }, [characterId, isConnected, messages, channel, user]);
 
-  return { messages, sendMessage, isConnected, channel };
+  return { messages, sendMessage, isConnected, channel, waitingForResponse };
 }
