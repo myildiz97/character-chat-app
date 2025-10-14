@@ -12,7 +12,7 @@ import {
 } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
-import { signInWithGoogle } from "@/lib/auth-actions";
+import { signInWithGoogle } from "@/lib/actions/auth-actions";
 
 export function LoginCard() {
   const handleLoginWithGoogle = async () => {
