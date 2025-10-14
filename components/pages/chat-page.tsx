@@ -1,5 +1,5 @@
-import { ChatHistory } from '../chat/chat-history';
+import { ChatsDashboard } from '../chat/chat-dashboard';
 
 export function ChatPageContent() {
-  return <ChatHistory />
+  return <ChatsDashboard />
 }
