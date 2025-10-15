@@ -7,6 +7,10 @@ import { ChatHistoryCarousel } from './chat-history-carousel';
 import { SearchBar } from '../shared/search-bar';
 import CarouselSkeleton from '../shared/carousel-skeleton';
 import { AvatarContainer } from '../shared/avatar-container';
+import { CustomText } from '../ui/custom/custom-text';
+import { cn } from '@/lib/utils';
+import { CustomHeading } from '../ui/custom/custom-heading';
+import Link from 'next/link';
 
 export function ChatsDashboard() {
   const { characters, isLoading: charactersLoading } = useCharacters();
@@ -16,37 +20,38 @@ export function ChatsDashboard() {
   const forYouCharacters = characters.filter((character) => !existingCharacters.includes(character.id));
 
   return (
-    <div className="w-full flex flex-col justify-start gap-2 p-4">
+    <div className="w-full flex flex-col justify-start gap-4 p-4 pb-10 md:pb-4">
       <div className='flex items-center justify-between'>
-        <div className='flex items-center gap-2'>
-          <h2 className="text-sm text-muted-foreground">Welcome back,</h2>
-          <AvatarContainer variant='user' label={{ show: true }} />
+        <div className='w-full hidden md:flex flex-col items-start gap-2'>
+          <CustomText variant='span'>Welcome back,</CustomText>
+          <AvatarContainer variant='user' label={{ show: true }} className='ml-2' />
         </div>
         <SearchBar />
       </div>
-      <>
-        <h2 className="text-2xl font-bold">For You</h2>
+      <div className={cn('w-full flex-col items-start gap-2', (forYouCharacters.length === 0 && !chatHistoryLoading && !charactersLoading) ? 'hidden' : 'flex')}>
+        <CustomHeading variant='h2'>Try These</CustomHeading>
         {
-          (charactersLoading || chatHistoryLoading) && <CarouselSkeleton />
-        }
-        {
-          (forYouCharacters.length > 0 && !chatHistoryLoading) && (
-            <CharactersCarousel characters={forYouCharacters} />
+          (charactersLoading || chatHistoryLoading) ? <CarouselSkeleton /> : (
+            (forYouCharacters.length > 0 && !chatHistoryLoading) ? (
+              <CharactersCarousel characters={forYouCharacters} />
+            ) : null
           )
         }
-      </>
+      </div>
 
-      <>
-        <h2 className="text-2xl font-bold">Chat History</h2>
+      <div className='w-full flex flex-col items-start gap-2'>
+        <CustomHeading variant='h2'>Chat History</CustomHeading>
         {
-          chatHistoryLoading && <CarouselSkeleton />
-        }
-        {
-          (chatHistory.length > 0 && !chatHistoryLoading) && (
-            <ChatHistoryCarousel chatHistory={chatHistory} />
+          chatHistoryLoading ? <CarouselSkeleton /> : (
+            (chatHistory.length > 0 && !chatHistoryLoading) ? (
+              <ChatHistoryCarousel chatHistory={chatHistory} />
+            ) : <CustomText variant='p' className='text-left w-full'>
+              No chats yet! 💬
+              Start a new conversation with one of the characters in the “Try These” section, or pick your favorite from <Link href="/characters" className="text-primary underline hover:text-primary/80">here</Link>.
+            </CustomText>
           )
         }
-      </>
+      </div>
     </div>
   )
 }

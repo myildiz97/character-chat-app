@@ -1,6 +1,8 @@
 import { ICharacterDB } from '@/lib/types/character'
-import Image from 'next/image';
 import { BackButton } from '../shared/back-button';
+import { AvatarContainer } from '../shared/avatar-container';
+import { CustomHeading } from '../ui/custom/custom-heading';
+import { CustomText } from '../ui/custom/custom-text';
 
 interface IRealtimeChatHeaderProps {
   character: ICharacterDB;
@@ -12,10 +14,18 @@ export const RealtimeChatHeader = ({ character }: IRealtimeChatHeaderProps) => {
       <div className='w-full max-w-5xl mx-auto flex items-center justify-between gap-4'>
         <BackButton href={`/chat`} label="Back to Chats" />
         <div className='flex items-center gap-4 mr-auto ml-4 md:mr-0 md:ml-0'>
-          <Image src={character.avatar_url || ''} alt={character.name} width={40} height={40} className='rounded-full' unoptimized />
+          <AvatarContainer
+            src={character.avatar_url || ""}
+            alt={character.name}
+            name={character.name}
+            variant='character'
+            className='aspect-square object-cover sm:object-contain'
+            width={40}
+            height={40}
+          />
           <div className='w-full flex flex-col mx-auto'>
-            <h4 className='text-lg font-bold'>{character.name}</h4>
-            <p className='text-sm text-muted-foreground'>By @{character.created_by}</p>
+            <CustomHeading variant='h4'>{character.name}</CustomHeading>
+            <CustomText variant='span'>By @{character.created_by}</CustomText>
           </div>
         </div>
       </div>

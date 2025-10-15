@@ -2,27 +2,44 @@ import { AvatarImage } from '@radix-ui/react-avatar';
 import { Avatar, AvatarFallback } from '../ui/avatar';
 import { useUserContext } from '../context/user-context';
 import { CustomText } from '../ui/custom/custom-text';
+import Image from 'next/image';
 
 interface IAvatarContainerProps {
   src?: string;
   alt?: string;
   name?: string;
-  variant?: 'default' | 'user';
+  variant?: 'default' | 'user' | 'character';
   label?: {
     text?: string;
     show?: boolean;
     direction?: 'row' | 'column';
   };
   size?: 'xs' | 'sm' | 'md' | 'lg';
+  className?: string;
+  width?: number;
+  height?: number;
 }
 
-export function AvatarContainer({ src = "", alt = "", name = "", variant = 'default', label = { text: "", show: false }, size = 'md' }: IAvatarContainerProps) {
+export function AvatarContainer({ src = "", alt = "", name = "", variant = 'default', label = { text: "", show: false }, size = 'md', className = "", width, height }: IAvatarContainerProps) {
   const { user } = useUserContext();
+
+  if (variant === 'character') {
+    return (
+      <Image
+        src={src || ""}
+        alt={alt || ""}
+        fill={!width && !height}
+        width={width}
+        height={height}
+        className="aspect-square object-cover sm:object-contain"
+        unoptimized
+      />
+    )
+  }
 
   const avatarSrc = variant === 'user' ? user?.user_metadata?.avatar_url : src;
   const avatarAlt = variant === 'user' ? (user?.user_metadata?.name || "User") : alt;
   const avatarName = variant === 'user' ? (user?.user_metadata?.name?.charAt(0)?.toUpperCase() || "U") : name;
-  const avatarLabel = variant === 'user' ? (user?.user_metadata?.name || "You") : label.text;
 
   const sizes = {
     xs: 'w-6 h-6',
@@ -32,12 +49,12 @@ export function AvatarContainer({ src = "", alt = "", name = "", variant = 'defa
   }
 
   return (
-    <div className={`flex items-center gap-2 ${label.direction === 'column' ? 'flex-col' : 'flex-row'}`}>
+    <div className={`flex items-center justify-center gap-1 ${label.direction === 'column' ? 'flex-col' : 'flex-row'} ${className}`}>
       <Avatar className={sizes[size]}>
         <AvatarImage src={avatarSrc} alt={avatarAlt}/>
         <AvatarFallback>{avatarName}</AvatarFallback>
       </Avatar>
-      {label.show && <CustomText variant='span'>{avatarLabel}</CustomText>}
+      {label.show && <CustomText variant='span' className='text-center'>You</CustomText>}
     </div>
   )
 }

@@ -2,7 +2,6 @@
 
 import { motion, } from "framer-motion";
 import { ICharacterDB } from '@/lib/types/character';
-import TargetCursor from '../shared/TargetCursor';
 import Link from 'next/link';
 import { CustomHeading } from '../ui/custom/custom-heading';
 import { CustomText } from '../ui/custom/custom-text';
@@ -17,16 +16,7 @@ interface ICharacterSelectProps {
 export default function CharacterSelect({ characters }: ICharacterSelectProps) {
   return (
     <>
-      <div className="relative md:hidden flex flex-col items-center justify-center overflow-hidden">
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-2 p-2 sm:p-6 sm:gap-4 max-h-[60vh] md:max-h-full overflow-y-auto md:overflow-y-hidden">
-          {characters.map((char) => <CharacterCard key={char.id} character={char} />)}
-        </div>
-      </div>
-      <div className="relative hidden md:flex flex-col items-center justify-center overflow-hidden ">
-        <TargetCursor
-          spinDuration={2}
-          hideDefaultCursor={true}
-        />
+      <div className="relative flex flex-col items-center justify-center overflow-hidden ">
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-2 p-2 sm:p-6 sm:gap-4 max-h-[60vh] md:max-h-full overflow-y-auto md:overflow-y-hidden">
           {characters.map((char) => <CharacterCard key={char.id} character={char} />)}
         </div>
@@ -48,7 +38,7 @@ const CharacterCard = ({ character }: ıCharacterCardProps) => {
       transition={{ delay: 0.1 }}
       whileHover={{ scale: 1.05, y: -6 }}
       whileTap={{ scale: 0.99 }}
-      className={`group relative cursor-target overflow-hidden rounded-3xl bg-secondary backdrop-blur-2xl`}
+      className={`group relative overflow-hidden rounded-3xl bg-secondary backdrop-blur-2xl`}
     >
       <Link href={`/chat/${character.id}`}>
         <motion.div

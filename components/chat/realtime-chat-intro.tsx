@@ -1,5 +1,7 @@
 import { ICharacterDB } from '@/lib/types/character';
-import Image from 'next/image';
+import { AvatarContainer } from '../shared/avatar-container';
+import { CustomHeading } from '../ui/custom/custom-heading';
+import { CustomText } from '../ui/custom/custom-text';
 
 interface IRealtimeChatIntroProps {
   character: ICharacterDB;
@@ -8,10 +10,18 @@ interface IRealtimeChatIntroProps {
 export const RealtimeChatIntro = ({ character }: IRealtimeChatIntroProps) => {
   return (
     <div className='flex flex-col items-center justify-center text-center gap-1 px-16 pb-6'>
-      <Image src={character.avatar_url || ''} alt={character.name} width={64} height={64} className='rounded-full' unoptimized />
-      <h1 className='text-2xl font-bold'>{character.name}</h1>
-      <p className='text-sm'>{character.short_description}</p>
-      <p className='text-sm text-muted-foreground'>By @{character.created_by}</p>
+      <AvatarContainer
+        src={character.avatar_url || ""}
+        alt={character.name}
+        name={character.name}
+        variant='character'
+        className='aspect-square object-cover sm:object-contain'
+        width={64}
+        height={64}
+      />
+      <CustomHeading variant='h1'>{character.name}</CustomHeading>
+      <CustomText variant='p'>{character.short_description}</CustomText>
+      <CustomText variant='span'>By @{character.created_by}</CustomText>
     </div>
   )
 }

@@ -8,7 +8,7 @@ interface CustomInputProps extends React.ComponentProps<"input"> {
 
 const CustomInput = forwardRef<HTMLInputElement, CustomInputProps>(({ className, ...props }, ref) => {
   return (
-    <Input className={cn(className)} ref={ref} {...props} />
+    <Input className={cn("text-base", className)} ref={ref} {...props} />
   )
 })
 

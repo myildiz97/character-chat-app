@@ -8,10 +8,11 @@ import {
   CarouselPrevious,
 } from "@/components/ui/carousel"
 import { ICharacterDB } from '@/lib/types/character';
-import Image from 'next/image';
-import { truncateString } from '@/lib/utils';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
+import { CustomHeading } from '../ui/custom/custom-heading';
+import { CustomText } from '../ui/custom/custom-text';
+import { AvatarContainer } from '../shared/avatar-container';
 
 interface CharactersCarouselProps {
   characters: ICharacterDB[];
@@ -20,7 +21,7 @@ interface CharactersCarouselProps {
 export default function CharactersCarousel({ characters }: CharactersCarouselProps) {
   return (
     <Carousel className="w-full">
-      <CarouselContent className="w-[94%] sm:w-[30%] h-[200px]">
+      <CarouselContent className="w-[280px] sm:w-[400px] h-full">
         {characters.map((character, index) => (
           <CarouselItem key={index}>
             <motion.div
@@ -44,18 +45,18 @@ export function CharactersCarouselItem({ character }: { character: ICharacterDB 
     <motion.div whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.98 }} transition={{ type: "spring", stiffness: 300, damping: 20 }}>
       <Link
         href={`/chat/${character.id}`}
-        className="w-full h-full flex justify-between gap-x-3 bg-secondary rounded-2xl p-4 shadow-sm hover:shadow-md transition-shadow duration-200"
+        className="w-full h-[200px] flex justify-between gap-x-3 bg-secondary rounded-2xl p-4 shadow-sm hover:shadow-md transition-shadow duration-200"
       >
         <CharactersCarouselItemImage character={character} />
         <motion.div
-          className="w-full h-full flex flex-col gap-1"
+          className="w-full h-full flex flex-col gap-1 select-none"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.4, delay: 0.2 }}
         >
-          <h3 className="font-bold">{character.name}</h3>
-          <span className="text-xs text-muted-foreground">By @{character.created_by}</span>
-          <p className="text-xs">{truncateString(character.short_description)}</p>
+          <CustomHeading variant='h3'>{character.name}</CustomHeading>
+          <CustomText variant='span'>By @{character.created_by}</CustomText>
+          <CustomText variant='p' className='truncate line-clamp-2 text-ellipsis'>{character.short_description}</CustomText>
         </motion.div>
       </Link>
     </motion.div>
@@ -69,12 +70,12 @@ export function CharactersCarouselItemImage({ character }: { character: ICharact
       whileHover={{ scale: 1.05 }}
       transition={{ type: "spring", stiffness: 250, damping: 20 }}
     >
-      <Image
+      <AvatarContainer
         src={character.avatar_url || ""}
         alt={character.name}
-        fill
-        className="aspect-square object-cover sm:object-contain"
-        unoptimized
+        name={character.name}
+        variant='character'
+        className='aspect-square object-cover sm:object-contain'
       />
     </motion.div>
   )

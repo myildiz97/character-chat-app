@@ -30,7 +30,7 @@ export function BottomNavigation() {
             <Link
               key={href}
               href={href}
-              className="relative flex flex-col items-center justify-center gap-1 px-4 cursor-target mx-auto min-w-11 min-h-11"
+              className="relative flex flex-col items-center justify-center gap-1 px-4 mx-auto min-w-11 min-h-11"
             >
               <motion.div
                 whileHover={{ scale: 1.15 }}
@@ -51,7 +51,7 @@ export function BottomNavigation() {
             <motion.button
               whileHover={{ scale: 1.15 }}
               whileTap={{ scale: 0.9 }}
-              className="relative flex flex-col items-center justify-center gap-1 px-4 focus:outline-none cursor-pointer cursor-target min-w-11 min-h-11 w-fit mx-auto"
+              className="relative flex flex-col items-center justify-center gap-1 px-4 focus:outline-none cursor-pointer min-w-11 min-h-11 w-fit mx-auto"
             >
               <AvatarContainer variant='user' label={{ show: true, direction: 'column' }} size='xs' />
             </motion.button>
