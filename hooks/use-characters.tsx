@@ -1,4 +1,4 @@
-import { LOCAL_STORAGE_KEY_CHARACTERS } from '@/lib/constants/chat';
+import { LOCAL_STORAGE_KEY_CHARACTERS } from '@/lib/constants/character';
 import { ICharacterDB } from '@/lib/types/character';
 import { getFromLocalStorage, saveToLocalStorage } from '@/lib/utils';
 import { useSearchParams } from 'next/navigation';

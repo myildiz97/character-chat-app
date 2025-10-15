@@ -14,10 +14,11 @@ export function LoginCard() {
       title="Get access to 10M+ Characters"
       description="Sign up in just ten seconds"
       headerClassName='text-center'
-      headerDescriptionClassName='text-2xl font-medium text-foreground'
+      headerDescriptionClassName='text-foreground'
       contentClassName='flex items-center justify-center'
-      className='border-none z-10 md:ml-8 lg:ml-20'
+      className='border-none z-10 sm:ml-8 lg:ml-20 my-auto'
       footer={footer}
+      footerClassName='mx-auto'
     >
       <GoogleSignin />
     </CustomCard>

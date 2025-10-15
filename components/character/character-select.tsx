@@ -4,18 +4,21 @@ import { motion, } from "framer-motion";
 import { ICharacterDB } from '@/lib/types/character';
 import TargetCursor from '../shared/TargetCursor';
 import Link from 'next/link';
-interface ICharacterSelectProps extends ICharacterDB {
+import { CustomHeading } from '../ui/custom/custom-heading';
+import { CustomText } from '../ui/custom/custom-text';
+import { AvatarContainer } from '../shared/avatar-container';
+interface ICharacterSelectItem extends ICharacterDB {
   color: string;
 }
-interface CharacterSelectProps {
-  characters: ICharacterSelectProps[];
+interface ICharacterSelectProps {
+  characters: ICharacterSelectItem[];
 }
 
-export default function CharacterSelect({ characters }: CharacterSelectProps) {
+export default function CharacterSelect({ characters }: ICharacterSelectProps) {
   return (
     <>
       <div className="relative md:hidden flex flex-col items-center justify-center overflow-hidden">
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-2 p-2 sm:p-6 sm:gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-2 p-2 sm:p-6 sm:gap-4 max-h-[60vh] md:max-h-full overflow-y-auto md:overflow-y-hidden">
           {characters.map((char) => <CharacterCard key={char.id} character={char} />)}
         </div>
       </div>
@@ -24,7 +27,7 @@ export default function CharacterSelect({ characters }: CharacterSelectProps) {
           spinDuration={2}
           hideDefaultCursor={true}
         />
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-2 p-2 sm:p-6 sm:gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-2 p-2 sm:p-6 sm:gap-4 max-h-[60vh] md:max-h-full overflow-y-auto md:overflow-y-hidden">
           {characters.map((char) => <CharacterCard key={char.id} character={char} />)}
         </div>
       </div>
@@ -32,11 +35,11 @@ export default function CharacterSelect({ characters }: CharacterSelectProps) {
   );
 }
 
-interface CharacterCardProps {
-  character: ICharacterSelectProps;
+interface ıCharacterCardProps {
+  character: ICharacterSelectItem;
 }
 
-const CharacterCard = ({ character }: CharacterCardProps) => {
+const CharacterCard = ({ character }: ıCharacterCardProps) => {
   return (
     <motion.div
       key={character.id}
@@ -55,18 +58,10 @@ const CharacterCard = ({ character }: CharacterCardProps) => {
           }}
         />
         <div className="flex flex-col items-center gap-2 p-6 relative z-10">
-          <motion.img
-            src={character.avatar_url}
-            alt={character.name}
-            className="w-20 h-20 rounded-full shadow-md"
-            whileHover={{ scale: 1.1, rotate: [0, 1, -1, 0] }}
-            transition={{ duration: 0.5 }}
-          />
-          <h3 className="text-xl font-semibold">{character.name}</h3>
-          <span className="text-sm text-muted-foreground -mt-3">By @{character.created_by}</span>
-          <p className="text-center">
-            {character.short_description}
-          </p>
+          <AvatarContainer src={character.avatar_url} alt={character.name} name={character.name} />
+          <CustomHeading variant='h3'>{character.name}</CustomHeading>
+          <CustomText variant='span' className='-mt-3'>By @{character.created_by}</CustomText>
+          <CustomText variant='p' className='text-center'>{character.short_description}</CustomText>
         </div>
       </Link>
     </motion.div>

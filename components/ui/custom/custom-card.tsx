@@ -3,6 +3,8 @@
 import { cn } from '@/lib/utils';
 import { ComponentProps, forwardRef } from 'react';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '../card';
+import { CustomHeading } from './custom-heading';
+import { CustomText } from './custom-text';
 
 interface CustomCardProps extends ComponentProps<"div"> {
   title: string;
@@ -22,7 +24,7 @@ const CustomCard = forwardRef<HTMLDivElement, CustomCardProps>(({ className, tit
       ref={ref}
       {...props}
       className={cn(
-        "w-full max-w-[98%] md:max-w-sm mx-auto",
+        "w-full rounded-none sm:rounded-xl sm:max-w-sm mx-auto",
         className,
       )}
     >
@@ -32,16 +34,18 @@ const CustomCard = forwardRef<HTMLDivElement, CustomCardProps>(({ className, tit
         )}
       >
         <CardTitle className={cn(
-          "text-3xl font-bold",
           headerTitleClassName,
         )}>
-          {title}
+          <CustomHeading variant='h1'>
+            {title}
+          </CustomHeading>
         </CardTitle>
         <CardDescription className={cn(
-          "text-lg!",
           headerDescriptionClassName,
         )}>
-          {description}
+          <CustomText variant='p'>
+            {description}
+          </CustomText>
         </CardDescription>
       </CardHeader>
       <CardContent className={cn(contentClassName)}>
@@ -49,10 +53,11 @@ const CustomCard = forwardRef<HTMLDivElement, CustomCardProps>(({ className, tit
       </CardContent>
       {footer && (
         <CardFooter className={cn(
-          "text-muted-foreground text-center",
           footerClassName,
         )}>
-          {footer}
+          <CustomText variant='span'>
+            {footer}
+          </CustomText>
         </CardFooter>
       )}
     </Card>

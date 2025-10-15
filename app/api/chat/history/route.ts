@@ -1,4 +1,5 @@
-import { CHARACTERS_TABLE, CHAT_MESSAGES_TABLE } from '@/lib/constants/chat';
+import { CHAT_MESSAGES_TABLE } from '@/lib/constants/chat';
+import { CHARACTERS_TABLE } from '@/lib/constants/character';
 import { ICharacterDB } from '@/lib/types/character';
 import { IChatMessageHistory } from '@/lib/types/chat';
 import { createClient } from '@/utils/supabase/server';

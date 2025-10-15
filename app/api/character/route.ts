@@ -1,4 +1,4 @@
-import { CHARACTERS_TABLE } from '@/lib/constants/chat';
+import { CHARACTERS_TABLE } from '@/lib/constants/character';
 import { ICharacterDB } from '@/lib/types/character';
 import { createClient } from '@/utils/supabase/server';
 import { NextResponse } from 'next/server';
