@@ -16,7 +16,7 @@ export function LoginCard() {
       headerClassName='text-center'
       headerDescriptionClassName='text-2xl font-medium text-foreground'
       contentClassName='flex items-center justify-center'
-      className='border-none z-10'
+      className='border-none z-10 md:ml-8 lg:ml-20'
       footer={footer}
     >
       <GoogleSignin />

@@ -22,7 +22,7 @@ const CustomCard = forwardRef<HTMLDivElement, CustomCardProps>(({ className, tit
       ref={ref}
       {...props}
       className={cn(
-        "w-full max-w-[98%] md:max-w-md mx-auto",
+        "w-full max-w-[98%] md:max-w-sm mx-auto",
         className,
       )}
     >
@@ -32,13 +32,13 @@ const CustomCard = forwardRef<HTMLDivElement, CustomCardProps>(({ className, tit
         )}
       >
         <CardTitle className={cn(
-          "text-4xl font-bold",
+          "text-3xl font-bold",
           headerTitleClassName,
         )}>
           {title}
         </CardTitle>
         <CardDescription className={cn(
-          "text-lg",
+          "text-lg!",
           headerDescriptionClassName,
         )}>
           {description}

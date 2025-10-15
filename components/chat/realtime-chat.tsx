@@ -50,7 +50,7 @@ export function RealtimeChat({ character, messages: initialMessages = [], onMess
   )
 
   return (
-    <div className="flex flex-col h-full w-full bg-background text-foreground antialiased overflow-hidden max-h-screen">
+    <div className="flex flex-col h-full w-full max-w-3xl bg-background text-foreground antialiased overflow-hidden max-h-screen">
       <RealtimeChatHeader character={character} />
       <div ref={containerRef} className="flex-1 overflow-y-auto p-4 space-y-4">
         <RealtimeChatIntro character={character} />
