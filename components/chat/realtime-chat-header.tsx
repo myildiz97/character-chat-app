@@ -10,8 +10,8 @@ export const RealtimeChatHeader = ({ character }: IRealtimeChatHeaderProps) => {
   return (
     <div className='fixed top-0 left-0 right-0 w-screen h-20 z-1 backdrop-blur-xl border-b border-border flex p-4'>
       <div className='w-full max-w-5xl mx-auto flex items-center justify-between gap-4'>
-        <BackButton href={`/chat`} />
-        <div className='flex items-center gap-4'>
+        <BackButton href={`/chat`} label="Back to Chats" />
+        <div className='flex items-center gap-4 mr-auto ml-4 md:mr-0 md:ml-0'>
           <Image src={character.avatar_url || ''} alt={character.name} width={40} height={40} className='rounded-full' unoptimized />
           <div className='w-full flex flex-col mx-auto'>
             <h4 className='text-lg font-bold'>{character.name}</h4>

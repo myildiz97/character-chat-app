@@ -13,7 +13,7 @@ export default function CarouselSkeleton() {
       transition={{ duration: 0.4, ease: "easeOut" }}
       className="w-full"
     >
-      <div className="flex gap-4 overflow-hidden w-full h-[146px]">
+      <div className="flex gap-4 overflow-hidden w-full h-[200px]">
         {items.map((_, index) => (
           <motion.div
             key={index}

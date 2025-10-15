@@ -13,15 +13,22 @@ interface CharacterSelectProps {
 
 export default function CharacterSelect({ characters }: CharacterSelectProps) {
   return (
-    <div className="relative flex flex-col items-center justify-center overflow-hidden">
-      <TargetCursor
-        spinDuration={2}
-        hideDefaultCursor={true}
-      />
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-2 p-2 sm:p-6 sm:gap-4">
-        {characters.map((char) => <CharacterCard key={char.id} character={char} />)}
+    <>
+      <div className="relative md:hidden flex flex-col items-center justify-center overflow-hidden">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-2 p-2 sm:p-6 sm:gap-4">
+          {characters.map((char) => <CharacterCard key={char.id} character={char} />)}
+        </div>
       </div>
-    </div>
+      <div className="relative hidden md:flex flex-col items-center justify-center overflow-hidden ">
+        <TargetCursor
+          spinDuration={2}
+          hideDefaultCursor={true}
+        />
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-2 p-2 sm:p-6 sm:gap-4">
+          {characters.map((char) => <CharacterCard key={char.id} character={char} />)}
+        </div>
+      </div>
+    </>
   );
 }
 
