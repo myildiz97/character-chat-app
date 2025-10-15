@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import { ThemeProvider } from '@/components/providers/theme-provider';
 import NextTopLoader from 'nextjs-toploader';
+import PageTransition from '@/components/layouts/page-transition';
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -27,9 +28,9 @@ export default function RootLayout({
           <NextTopLoader 
             showSpinner={false}
           />
-          <main className="flex min-h-screen flex-col items-center justify-center relative overflow-hidden mx-auto">
+          <PageTransition>
             {children}
-          </main>
+          </PageTransition>
         </ThemeProvider>
       </body>
     </html>

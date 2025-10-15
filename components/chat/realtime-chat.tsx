@@ -5,10 +5,10 @@ import { useRealtimeChat } from '@/hooks/use-realtime-chat';
 import { IChatMessage } from '@/lib/types/chat';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { ChatMessageItem, ChatMessageItemWaitingForResponse } from './chat-message-item';
-import { RealtimeChatHeader } from './realtime-chat-header';
 import { ICharacterDB } from '@/lib/types/character';
 import { RealtimeChatIntro } from './realtime-chat-intro';
 import RealtimeChatInput from './realtime-chat-input';
+import { motion } from 'framer-motion';
 
 interface IRealtimeChatProps {
   character: ICharacterDB;
@@ -50,8 +50,7 @@ export function RealtimeChat({ character, messages: initialMessages = [], onMess
   )
 
   return (
-    <div className="flex flex-col h-full w-full max-w-3xl bg-background text-foreground antialiased overflow-hidden max-h-screen">
-      <RealtimeChatHeader character={character} />
+    <div className="flex flex-col h-full w-full max-w-3xl bg-background text-foreground antialiased overflow-hidden mt-20 max-h-[calc(100vh-80px)]">
       <div ref={containerRef} className="flex-1 overflow-y-auto p-4 space-y-4">
         <RealtimeChatIntro character={character} />
         {allMessages.length === 0 ? (
@@ -64,18 +63,22 @@ export function RealtimeChat({ character, messages: initialMessages = [], onMess
             const prevMessage = index > 0 ? allMessages[index - 1] : null
             const showHeader = !prevMessage || prevMessage?.role !== message?.role
             return (
-              <div
+              <motion.div 
                 key={message?.id}
-                className="animate-in fade-in slide-in-from-bottom-4 duration-300"
-                >
-                  <ChatMessageItem
-                    message={message}
-                    character={character}
-                    isOwnMessage={message.role === 'user'}
-                    showHeader={showHeader}
-                  />
-              </div>
-                )
+                initial={{ opacity: 0, y: 16 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -8 }}
+                transition={{ duration: 0.25, ease: "easeOut" }}
+                whileHover={{ scale: 1.01 }}
+              >
+                <ChatMessageItem
+                  message={message}
+                  character={character}
+                  isOwnMessage={message.role === 'user'}
+                  showHeader={showHeader}
+                />
+              </motion.div>
+            )
             })}
             {waitingForResponse && <ChatMessageItemWaitingForResponse />}
         </div>

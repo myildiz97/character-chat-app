@@ -2,9 +2,10 @@
 
 import { useCharacters } from '@/hooks/use-characters';
 import CharacterSelect from './character-select';
+import CharacterSelectSkeleton from './character-select-skeleton';
 
 export function CharactersContainer() {
-  const { characters: existingCharacters } = useCharacters();
+  const { characters: existingCharacters, isLoading: charactersLoading } = useCharacters();
 
   const colorPalette = ["#8b5cf6", "#10b981", "#ef4444", "#8b5cf6", "#10b981", "#f59e0b", "#ef4444"];
 
@@ -18,7 +19,14 @@ export function CharactersContainer() {
       <h1 className='text-2xl font-bold'>👋 Welcome!</h1>
       <p>Who would you like to chat with today?</p>
       <span className='text-sm text-muted-foreground'>Select a character to start chatting with</span>
-      <CharacterSelect characters={characters} />
+      {
+        charactersLoading && <CharacterSelectSkeleton />
+      }
+      {
+        characters.length > 0 && (
+          <CharacterSelect characters={characters} />
+        )
+      }
     </div>
   )
 }

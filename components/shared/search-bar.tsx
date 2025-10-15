@@ -3,15 +3,17 @@ import { CustomInput } from '../ui/custom/custom-input';
 import { useCallback, useEffect, useMemo } from 'react';
 import debounce from 'lodash.debounce';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
+import { cn } from '@/lib/utils';
 
 const DEFAULT_DELAY = 500;
 
 interface ISearchBarProps {
   onSearch?: (value: string) => void;
   delay?: number;
+  className?: string;
 }
 
-export function SearchBar({ onSearch, delay = DEFAULT_DELAY }: ISearchBarProps) {
+export function SearchBar({ onSearch, delay = DEFAULT_DELAY, className }: ISearchBarProps) {
   const pathname = usePathname();
   const params = useSearchParams();
   const router = useRouter();
@@ -48,7 +50,7 @@ export function SearchBar({ onSearch, delay = DEFAULT_DELAY }: ISearchBarProps) 
   }, [debouncedSearch])
 
   return (
-    <div className="flex items-center gap-2 w-full relative">
+    <div className={cn("flex items-center gap-2 w-full max-w-xs relative", className)}>
       <SearchIcon className="w-4 h-4 text-muted-foreground absolute left-2" />
       <CustomInput 
         type="text" 

@@ -6,6 +6,7 @@ import { useCallback, useEffect, useState } from 'react';
 
 export function useCharacters() {
   const [characters, setCharacters] = useState<ICharacterDB[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
 
   const searchParams = useSearchParams();
   const searchQuery = searchParams.get('q');
@@ -19,6 +20,7 @@ export function useCharacters() {
 
   const fetchCharacters = useCallback(async () => {
     try {
+      setIsLoading(true);
       let charactersFromLocalStorage = getFromLocalStorage(LOCAL_STORAGE_KEY_CHARACTERS);
       if (charactersFromLocalStorage.length > 0) {
         if (searchQuery) {
@@ -36,6 +38,8 @@ export function useCharacters() {
       saveToLocalStorage(LOCAL_STORAGE_KEY_CHARACTERS, characters);
     } catch (error) {
       console.error('Error fetching characters:', error);
+    } finally {
+      setIsLoading(false);
     }
   }, [filteredCharacters, searchQuery]);
 
@@ -43,5 +47,5 @@ export function useCharacters() {
     fetchCharacters();
   }, [fetchCharacters]);
 
-  return { characters, setCharacters };
+  return { characters, setCharacters, isLoading };
 }

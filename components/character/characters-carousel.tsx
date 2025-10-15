@@ -18,16 +18,16 @@ interface CharactersCarouselProps {
 
 export default function CharactersCarousel({ characters }: CharactersCarouselProps) {
   return (
-    <Carousel className="w-full max-w-xs">
-      <CarouselContent className='w-[94%] h-[146px]'>
+    <Carousel className="w-full">
+      <CarouselContent className='w-[94%] sm:w-[30%] h-[146px]'>
         {characters.map((character, index) => (
           <CarouselItem key={index}>
             <CharactersCarouselItem character={character} />
           </CarouselItem>
         ))}
       </CarouselContent>
-      <CarouselPrevious className='hidden' />
-      <CarouselNext className='hidden' />
+      <CarouselPrevious className='hidden sm:flex' />
+      <CarouselNext className='hidden sm:flex' />
     </Carousel>
   )
 }
@@ -48,7 +48,7 @@ export function CharactersCarouselItem({ character }: { character: ICharacterDB 
 export function CharactersCarouselItemImage({ character }: { character: ICharacterDB }) {
   return (
     <div className= 'relative w-full min-w-[40%] h-full flex items-center justify-center aspect-square rounded-3xl overflow-hidden'>
-      <Image src={character.avatar_url || ''} alt={character.name} fill className='object-cover' unoptimized />
+      <Image src={character.avatar_url || ''} alt={character.name} fill className='object-cover sm:object-contain' unoptimized />
     </div>
   )
 }

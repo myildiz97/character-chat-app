@@ -1,6 +1,6 @@
 "use client";
 
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, } from "framer-motion";
 import { ICharacterDB } from '@/lib/types/character';
 import TargetCursor from '../shared/TargetCursor';
 import Link from 'next/link';
@@ -18,18 +18,9 @@ export default function CharacterSelect({ characters }: CharacterSelectProps) {
         spinDuration={2}
         hideDefaultCursor={true}
       />
-      <AnimatePresence mode="wait">
-        <motion.div
-          key="grid"
-          initial={{ opacity: 0, scale: 0.5 }}
-          animate={{ opacity: 1, scale: 1 }}
-          exit={{ opacity: 0, y: -20 }}
-          transition={{ duration: 0.8 }}
-          className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-2 p-2 sm:p-6 sm:gap-4"
-        >
-          {characters.map((char) => <CharacterCard key={char.id} character={char} />)}
-        </motion.div>
-      </AnimatePresence>
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-2 p-2 sm:p-6 sm:gap-4">
+        {characters.map((char) => <CharacterCard key={char.id} character={char} />)}
+      </div>
     </div>
   );
 }

@@ -7,6 +7,7 @@ import { useCallback, useEffect, useState } from 'react';
 export function useChatHistory() {
   const supabase = createClient();
   const [chatHistory, setChatHistory] = useState<IChatMessageHistory[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
 
   const searchParams = useSearchParams();
   const searchQuery = searchParams.get('q');
@@ -20,15 +21,17 @@ export function useChatHistory() {
 
   const fetchChatMessageHistory = useCallback(async () => {
     try {
+      setIsLoading(true);
       const chatMessageHistoryResponse = await fetch('/api/chat/history');
       if (!chatMessageHistoryResponse.ok) {
         throw new Error('Failed to fetch chat message history');
       }
       const chatMessageHistory = await chatMessageHistoryResponse.json() as IChatMessageHistory[];
       setChatHistory(filteredChatHistory(chatMessageHistory)); 
-
     } catch (error) {
       console.error('Error fetching chat message history:', error);
+    } finally {
+      setIsLoading(false);
     }
   }, [filteredChatHistory]);
 
@@ -54,5 +57,5 @@ export function useChatHistory() {
   }, [chatHistory, fetchChatMessageHistory, supabase]);
   
 
-  return { chatHistory, setChatHistory };
+  return { chatHistory, setChatHistory, isLoading };
 }

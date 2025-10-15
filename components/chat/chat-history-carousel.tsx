@@ -6,18 +6,22 @@ import { truncateString } from '@/lib/utils';
 import Image from 'next/image';
 import Link from 'next/link';
 
-export function ChatHistoryCarousel({ chatHistory }: { chatHistory: IChatMessageHistory[] }) {
+interface ChatHistoryCarouselProps {
+  chatHistory: IChatMessageHistory[];
+}
+
+export function ChatHistoryCarousel({ chatHistory }: ChatHistoryCarouselProps) {
   return (
-    <Carousel className="w-full max-w-xs">
-      <CarouselContent className='w-[90%] h-[146px]'>
+    <Carousel className="w-full">
+      <CarouselContent className='w-[90%] sm:w-[30%] h-[146px]'>
         {chatHistory.map((chat, index) => (
           <CarouselItem key={index}>
             <CharactersCarouselItem chat={chat} />
           </CarouselItem>
         ))}
       </CarouselContent>
-      <CarouselPrevious className='hidden' />
-      <CarouselNext className='hidden' />
+      <CarouselPrevious className='hidden sm:flex' />
+      <CarouselNext className='hidden sm:flex' />
     </Carousel>
   )
 }
@@ -37,7 +41,7 @@ export function CharactersCarouselItem({ chat }: { chat: IChatMessageHistory }) 
 export function CharactersCarouselItemImage({ chat }: { chat: IChatMessageHistory }) {
   return (
     <div className= 'relative w-full min-w-[50%] h-full flex items-center justify-center aspect-square rounded-3xl overflow-hidden'>
-      <Image src={chat.character.avatar_url || ''} alt={chat.character.name} fill className='object-cover' unoptimized />
+      <Image src={chat.character.avatar_url || ''} alt={chat.character.name} fill className='object-cover sm:object-contain' unoptimized />
     </div>
   )
 }
