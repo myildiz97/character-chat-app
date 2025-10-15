@@ -20,7 +20,7 @@ export function ChatsDashboard() {
   const forYouCharacters = characters.filter((character) => !existingCharacters.includes(character.id));
 
   return (
-    <div className="w-full flex flex-col justify-start gap-4 p-4 pb-10 md:pb-4">
+    <div className="w-full flex flex-col justify-start gap-4 px-4 pb-4">
       <div className='flex items-center justify-between'>
         <div className='w-full hidden md:flex flex-col items-start gap-2'>
           <CustomText variant='span'>Welcome back,</CustomText>

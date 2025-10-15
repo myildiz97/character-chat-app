@@ -7,6 +7,8 @@ import { ICharacterDB } from '@/lib/types/character';
 import { ChatSkeleton } from './chat-skeleton';
 import { RealtimeChatHeader } from './realtime-chat-header';
 import { RealtimeChatHeaderSkeleton } from './chat-header-skeleton';
+import { API_ROUTES, handleApiError } from '@/lib/api-utils';
+import { toast } from 'sonner';
 
 interface IRealtimeChatContainerProps {
   characterId: string;
@@ -20,40 +22,51 @@ export function RealtimeChatContainer({ characterId }: IRealtimeChatContainerPro
 
   useEffect(() => {
     const fetchCharacter = async () => {
-      setIsCharacterLoading(true);
-      const endpoint= `/api/character/${characterId}`
-      const response = await fetch(endpoint, {
-        method: "GET",
-        headers: { "Content-Type": "application/json" },
-      });
+      try {
+        setIsCharacterLoading(true);
+        const endpoint= `${API_ROUTES.CHARACTERS}/${characterId}`
+        const response = await fetch(endpoint, {
+          method: "GET",
+          headers: { "Content-Type": "application/json" },
+        });
 
-      if (!response.ok) {
-        throw new Error("Failed to fetch character")
+        if (!response.ok) {
+          throw new Error("Failed to fetch character. Please refresh the page and try again.")
+        }
+
+        const data = await response.json();
+        setCharacter(data);
+      } catch (error) {
+        console.error("Error fetching character:", error);
+        toast.error(handleApiError(error));
+      } finally {
+        setIsCharacterLoading(false);
       }
-
-      const data = await response.json();
-      setCharacter(data);
-      setIsCharacterLoading(false);
     }
-    fetchCharacter();
-
     const fetchMessages = async () => {
-      setIsMessagesLoading(true);
-      const endpoint= `/api/chat/${characterId}`
-      const response = await fetch(endpoint, {
-        method: "GET",
-        headers: { "Content-Type": "application/json" },
-      });
-
-      if (!response.ok) {
-        throw new Error("Failed to fetch messages")
+      try {
+        setIsMessagesLoading(true);
+        const endpoint= `${API_ROUTES.CHAT}/${characterId}`
+        const response = await fetch(endpoint, {
+          method: "GET",
+          headers: { "Content-Type": "application/json" },
+        });
+  
+        if (!response.ok) {
+          throw new Error("Failed to fetch messages. Please refresh the page and try again.")
+        }
+  
+        const data = await response.json();
+        setMessages(data.messages);
+      } catch (error) {
+        console.error("Error fetching messages:", error);
+        toast.error(handleApiError(error));
+      } finally {
+        setIsMessagesLoading(false);
       }
-
-      const data = await response.json();
-      setMessages(data.messages);
-      setIsMessagesLoading(false);
     }
-    fetchMessages();
+
+    Promise.all([fetchCharacter(), fetchMessages()]);
   }, [characterId]);
 
 

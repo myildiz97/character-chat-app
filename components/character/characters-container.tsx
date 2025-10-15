@@ -27,7 +27,7 @@ export function CharactersContainer() {
           <CharacterSelectSkeleton />
         ): characters.length > 0 ? (
           <CharacterSelect characters={characters} />
-        ): <CustomText variant='p' className='text-center'>No characters found.</CustomText>
+        ): <CustomText variant='p' className='text-center'>It seems like we don&apos;t have any characters available. Please try again later.</CustomText>
       }
     </div>
   )

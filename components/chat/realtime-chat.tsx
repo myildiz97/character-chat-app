@@ -9,6 +9,7 @@ import { ICharacterDB } from '@/lib/types/character';
 import { RealtimeChatIntro } from './realtime-chat-intro';
 import RealtimeChatInput from './realtime-chat-input';
 import { motion } from 'framer-motion';
+import { ChatBottomButton } from './chat-bottom-button';
 
 interface IRealtimeChatProps {
   character: ICharacterDB;
@@ -50,8 +51,8 @@ export function RealtimeChat({ character, messages: initialMessages = [], onMess
   )
 
   return (
-    <div className="flex flex-col h-full w-full max-w-3xl bg-background text-foreground antialiased overflow-hidden pt-20 max-h-[80vh] md:max-h-[88vh]">
-      <div ref={containerRef} className="flex-1 overflow-y-auto p-4 space-y-4">
+    <div className="flex flex-col h-full w-full max-w-3xl bg-background text-foreground antialiased overflow-hidden pt-20 max-h-[80vh] md:max-h-[85vh]">
+      <div ref={containerRef} className="flex-1 overflow-y-auto p-4 space-y-4 relative">
         <RealtimeChatIntro character={character} />
         {allMessages.length === 0 ? (
           <div className="text-center text-sm text-muted-foreground">
@@ -84,7 +85,8 @@ export function RealtimeChat({ character, messages: initialMessages = [], onMess
         </div>
       </div>
     
-      <form onSubmit={handleSendMessage} className="flex w-full gap-2 border-t border-border p-4">
+      <form onSubmit={handleSendMessage} className="flex w-full gap-2 border-t border-border p-4 relative">
+        <ChatBottomButton scrollContainerRef={containerRef} />
         <RealtimeChatInput
           disabled={!isConnected || waitingForResponse}
           value={newMessage}

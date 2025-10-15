@@ -15,13 +15,11 @@ interface ICharacterSelectProps {
 
 export default function CharacterSelect({ characters }: ICharacterSelectProps) {
   return (
-    <>
-      <div className="relative flex flex-col items-center justify-center overflow-hidden ">
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-2 p-2 sm:p-6 sm:gap-4 max-h-[60vh] md:max-h-full overflow-y-auto md:overflow-y-hidden">
-          {characters.map((char) => <CharacterCard key={char.id} character={char} />)}
-        </div>
+    <div className="relative flex flex-col items-center justify-center overflow-hidden">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-2 p-2 sm:p-6 sm:gap-4 max-h-[60vh] md:max-h-full overflow-y-auto md:overflow-y-hidden">
+        {characters.map((char) => <CharacterCard key={char.id} character={char} />)}
       </div>
-    </>
+    </div>
   );
 }
 

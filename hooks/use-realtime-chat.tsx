@@ -1,10 +1,12 @@
 import { useUserContext } from '@/components/context/user-context';
 import { getGroqChatCompletion } from '@/lib/actions/groq-action';
+import { API_ROUTES, handleApiError } from '@/lib/api-utils';
 import { EVENT_CHAT_TYPE } from '@/lib/constants/chat';
 import { ICharacterDB } from '@/lib/types/character';
 import { IChatMessage, IChatMessageCore } from '@/lib/types/chat';
 import { createClient } from '@/utils/supabase/client';
 import { useCallback, useEffect, useState } from 'react';
+import { toast } from 'sonner';
 
 interface IUseRealtimeChatProps {
   characterId: string;
@@ -56,7 +58,7 @@ export function useRealtimeChat({ characterId }: IUseRealtimeChatProps) {
     try {
       setWaitingForResponse(true);
 
-      const userResponse = await fetch(`/api/chat/${characterId}`, {
+      const userResponse = await fetch(`${API_ROUTES.CHAT}/${characterId}`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -66,7 +68,7 @@ export function useRealtimeChat({ characterId }: IUseRealtimeChatProps) {
       })
 
       if (!userResponse.ok) {
-        throw new Error("Failed to send message")
+        throw new Error("Failed to send message. Please refresh the page and try again.")
       }
 
       const data = await userResponse.json();
@@ -79,9 +81,9 @@ export function useRealtimeChat({ characterId }: IUseRealtimeChatProps) {
 
       const newMessages: IChatMessage[] = [...messages, data];
 
-      const characterResponse = await fetch(`/api/character/${characterId}`);
+      const characterResponse = await fetch(`${API_ROUTES.CHARACTERS}/${characterId}`);
       if (!characterResponse.ok) {
-        throw new Error("Failed to fetch character")
+        throw new Error("Failed to fetch character. Please refresh the page and try again.")
       }
       const character = await characterResponse.json() as ICharacterDB;
 
@@ -99,7 +101,7 @@ export function useRealtimeChat({ characterId }: IUseRealtimeChatProps) {
       const completion = await getGroqChatCompletion({ messages: messageHistory });
       const completionContent = completion.choices[0]?.message?.content || 'There was an error generating a response';
 
-      const assistantResponse = await fetch(`/api/chat/${characterId}`, {
+      const assistantResponse = await fetch(`${API_ROUTES.CHAT}/${characterId}`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -109,7 +111,7 @@ export function useRealtimeChat({ characterId }: IUseRealtimeChatProps) {
       })
 
       if (!assistantResponse.ok) {
-        throw new Error("Failed to send message")
+        throw new Error("Failed to send message. Please refresh the page and try again.")
       }
 
       const assistantData = await assistantResponse.json();
@@ -126,6 +128,7 @@ export function useRealtimeChat({ characterId }: IUseRealtimeChatProps) {
     } catch (error) {
       console.error(error);
       setWaitingForResponse(false);
+      toast.error(handleApiError(error));
     }
   }, [characterId, isConnected, messages, channel, user]);
 

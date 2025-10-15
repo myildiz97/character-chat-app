@@ -23,7 +23,7 @@ export function BottomNavigation() {
 
   return (
     <nav className="fixed bottom-0 left-0 right-0 z-50 border-t border-border bg-background/70 backdrop-blur-xl">
-      <div className="grid grid-cols-3 items-center py-3">
+      <div className="grid grid-cols-3 items-center py-3 max-w-sm mx-auto">
         {NAV_ITEMS.map(({ href, label, icon: Icon }) => {
           const isActive = pathname.includes(href);
           return (

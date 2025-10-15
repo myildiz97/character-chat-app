@@ -50,7 +50,7 @@ export function SearchBar({ onSearch, delay = DEFAULT_DELAY, className }: ISearc
   }, [debouncedSearch])
 
   return (
-    <div className={cn("flex items-center gap-2 w-full max-w-xs relative", className)}>
+    <div className={cn("flex items-center gap-2 w-full max-w-md md:max-w-xs relative", className)}>
       <SearchIcon className="w-4 h-4 text-muted-foreground absolute left-2" />
       <CustomInput 
         type="text" 

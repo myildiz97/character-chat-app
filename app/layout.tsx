@@ -3,6 +3,7 @@ import "./globals.css";
 import { ThemeProvider } from '@/components/providers/theme-provider';
 import NextTopLoader from 'nextjs-toploader';
 import PageTransition from '@/components/layouts/page-transition';
+import { Toaster } from 'sonner';
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -30,6 +31,7 @@ export default function RootLayout({
           />
           <PageTransition>
             {children}
+            <Toaster />
           </PageTransition>
         </ThemeProvider>
       </body>
