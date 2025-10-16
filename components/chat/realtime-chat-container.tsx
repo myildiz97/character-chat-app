@@ -71,7 +71,7 @@ export function RealtimeChatContainer({ characterId }: IRealtimeChatContainerPro
 
 
   return (
-    <>
+    <div className="relative flex flex-col w-full items-center flex-1 h-dvh">
       {
         isCharacterLoading ? <RealtimeChatHeaderSkeleton /> : (
           <RealtimeChatHeader character={character as ICharacterDB} />
@@ -85,6 +85,6 @@ export function RealtimeChatContainer({ characterId }: IRealtimeChatContainerPro
           />
         )
       }
-    </>
+    </div>
   )
 }

@@ -2,8 +2,12 @@
 
 import { motion } from "framer-motion"
 import { Skeleton } from "@/components/ui/skeleton"
+import { cn } from "@/lib/utils"
+interface CarouselSkeletonProps {
+  className?: string;
+}
 
-export default function CarouselSkeleton() {
+export default function CarouselSkeleton({ className }: CarouselSkeletonProps) {
   const items = Array.from({ length: 5 })
 
   return (
@@ -11,7 +15,7 @@ export default function CarouselSkeleton() {
       initial={{ opacity: 0, y: 10 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.4, ease: "easeOut" }}
-      className="w-full"
+      className={cn("w-full", className)}
     >
       <div className="flex gap-4 overflow-hidden w-full h-[200px]">
         {items.map((_, index) => (

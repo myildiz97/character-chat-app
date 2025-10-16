@@ -13,14 +13,16 @@ import { motion } from 'framer-motion';
 import { CustomHeading } from '../ui/custom/custom-heading';
 import { CustomText } from '../ui/custom/custom-text';
 import { AvatarContainer } from '../shared/avatar-container';
+import { cn } from '@/lib/utils';
 
 interface CharactersCarouselProps {
   characters: ICharacterDB[];
+  className?: string;
 }
 
-export default function CharactersCarousel({ characters }: CharactersCarouselProps) {
+export default function CharactersCarousel({ characters, className }: CharactersCarouselProps) {
   return (
-    <Carousel className="w-full">
+    <Carousel className={cn("w-full", className)}>
       <CarouselContent className="w-[280px] sm:w-[400px] h-full">
         {characters.map((character, index) => (
           <CarouselItem key={index}>

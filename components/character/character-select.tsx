@@ -6,6 +6,7 @@ import Link from 'next/link';
 import { CustomHeading } from '../ui/custom/custom-heading';
 import { CustomText } from '../ui/custom/custom-text';
 import { AvatarContainer } from '../shared/avatar-container';
+import CharactersCarousel from './characters-carousel';
 interface ICharacterSelectItem extends ICharacterDB {
   color: string;
 }
@@ -15,11 +16,12 @@ interface ICharacterSelectProps {
 
 export default function CharacterSelect({ characters }: ICharacterSelectProps) {
   return (
-    <div className="relative flex flex-col items-center justify-center overflow-hidden">
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-2 p-2 sm:p-6 sm:gap-4 max-h-[60vh] md:max-h-full overflow-y-auto md:overflow-y-hidden">
+    <>
+      <CharactersCarousel characters={characters} className='sm:hidden p-2' />
+      <div className="hidden sm:grid sm:grid-cols-2 md:grid-cols-3 sm:p-6 sm:gap-4 sm:max-h-full sm:overflow-y-hidden">
         {characters.map((char) => <CharacterCard key={char.id} character={char} />)}
       </div>
-    </div>
+    </>
   );
 }
 
