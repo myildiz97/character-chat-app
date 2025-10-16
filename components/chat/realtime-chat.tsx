@@ -51,7 +51,7 @@ export function RealtimeChat({ character, messages: initialMessages = [], onMess
   )
 
   return (
-    <div className="relative flex flex-col h-full w-full max-w-3xl bg-background text-foreground antialiased overflow-x-hidden pt-14 max-h-[80vh] md:max-h-[85vh]">
+    <div className="relative flex flex-col h-full w-full max-w-3xl bg-background text-foreground antialiased overflow-x-hidden pt-14 max-h-[calc(100dvh-100px)] md:max-h-[calc(100dvh-120px)]">
       <div ref={containerRef} className="flex-1 overflow-y-auto p-4 space-y-4 relative">
         <RealtimeChatIntro character={character} />
         {allMessages.length === 0 ? (
