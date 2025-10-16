@@ -24,7 +24,7 @@ export function ChatsDashboard() {
       <div className='flex items-center justify-between'>
         <div className='w-full hidden md:flex flex-col items-start gap-2'>
           <CustomText variant='span'>Welcome back,</CustomText>
-          <AvatarContainer variant='user' label={{ show: true }} className='ml-2' />
+          <AvatarContainer variant='user' label={{ show: true, type: 'long' }} className='ml-2' />
         </div>
         <SearchBar />
       </div>

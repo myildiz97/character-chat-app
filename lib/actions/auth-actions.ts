@@ -51,7 +51,8 @@ export async function logout() {
 }
 
 export async function signInWithGoogle() {
-  const supabase = await createClient()
+  const supabase = await createClient();
+  const redirectBaseUrl = process.env.NEXT_PUBLIC_APP_URL || window.location.origin;
   const { data, error } = await supabase.auth.signInWithOAuth({
     provider: 'google',
     options: {
@@ -59,7 +60,7 @@ export async function signInWithGoogle() {
         access_type: 'offline',
         prompt: 'consent',
       },
-      redirectTo: `${process.env.NEXT_PUBLIC_APP_URL}/auth/callback?next=/characters`,
+      redirectTo: `${redirectBaseUrl}/auth/callback?next=/characters`,
     },
   })
   if (error) {

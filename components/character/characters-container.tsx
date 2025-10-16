@@ -16,7 +16,7 @@ export function CharactersContainer() {
   }));
 
   return (
-    <div className='w-full h-full flex flex-col items-center justify-center gap-2 overflow-hidden'>
+    <div className='w-full h-full flex flex-col items-center justify-start gap-2 overflow-hidden'>
       <div className='flex flex-col items-center justify-center gap-1 px-2'>
         <CustomHeading variant='h2'>👋 Welcome!</CustomHeading>
         <CustomText variant='p' className='text-center'>Who would you like to chat with today?</CustomText>

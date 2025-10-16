@@ -13,6 +13,7 @@ interface IAvatarContainerProps {
     text?: string;
     show?: boolean;
     direction?: 'row' | 'column';
+    type?: 'short' | 'long';
   };
   size?: 'xs' | 'sm' | 'md' | 'lg';
   className?: string;
@@ -20,7 +21,7 @@ interface IAvatarContainerProps {
   height?: number;
 }
 
-export function AvatarContainer({ src = "", alt = "", name = "", variant = 'default', label = { text: "", show: false }, size = 'md', className = "", width, height }: IAvatarContainerProps) {
+export function AvatarContainer({ src = "", alt = "", name = "", variant = 'default', label = { text: "", show: false, type: 'long' }, size = 'md', className = "", width, height }: IAvatarContainerProps) {
   const { user } = useUserContext();
 
   if (variant === 'character') {
@@ -40,6 +41,7 @@ export function AvatarContainer({ src = "", alt = "", name = "", variant = 'defa
   const avatarSrc = variant === 'user' ? user?.user_metadata?.avatar_url : src;
   const avatarAlt = variant === 'user' ? (user?.user_metadata?.name || "User") : alt;
   const avatarName = variant === 'user' ? (user?.user_metadata?.name?.charAt(0)?.toUpperCase() || "U") : name;
+  const avatarLabel = variant === 'user' ? (label.type === 'long' ? user?.user_metadata?.name || "You" : "You") : label.text;
 
   const sizes = {
     xs: 'w-6 h-6',
@@ -54,7 +56,11 @@ export function AvatarContainer({ src = "", alt = "", name = "", variant = 'defa
         <AvatarImage src={avatarSrc} alt={avatarAlt}/>
         <AvatarFallback>{avatarName}</AvatarFallback>
       </Avatar>
-      {label.show && <CustomText variant='span' className='text-center'>You</CustomText>}
+      {label.show && (
+        <>
+          <CustomText variant='span' className='text-center'>{avatarLabel}</CustomText>
+        </>
+      )}
     </div>
   )
 }

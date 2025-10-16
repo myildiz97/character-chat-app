@@ -53,7 +53,7 @@ export function BottomNavigation() {
               whileTap={{ scale: 0.9 }}
               className="relative flex flex-col items-center justify-center gap-1 px-4 focus:outline-none cursor-pointer min-w-11 min-h-11 w-fit mx-auto"
             >
-              <AvatarContainer variant='user' label={{ show: true, direction: 'column' }} size='xs' />
+              <AvatarContainer variant='user' label={{ show: true, direction: 'column', type: 'short' }} size='xs' />
             </motion.button>
           </DropdownMenuTrigger>
           <DropdownMenuContent side="top" align="center" className="w-28">
