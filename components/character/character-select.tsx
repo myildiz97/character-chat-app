@@ -38,7 +38,7 @@ const CharacterCard = ({ character }: ıCharacterCardProps) => {
       transition={{ delay: 0.1 }}
       whileHover={{ scale: 1.05, y: -6 }}
       whileTap={{ scale: 0.99 }}
-      className={`group relative overflow-hidden rounded-3xl bg-secondary backdrop-blur-2xl`}
+      className={`group relative overflow-hidden rounded-3xl bg-secondary backdrop-blur-2xl h-60`}
     >
       <Link href={`/chat/${character.id}`}>
         <motion.div

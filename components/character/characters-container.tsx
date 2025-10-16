@@ -10,9 +10,9 @@ import { CustomText } from '../ui/custom/custom-text';
 export function CharactersContainer() {
   const { characters: existingCharacters, isLoading: charactersLoading } = useCharacters();
 
-  const characters = existingCharacters.map((character) => ({
+  const characters = existingCharacters.map((character, index) => ({
     ...character,
-    color: COLOR_PALETTE[Math.floor(Math.random() * COLOR_PALETTE.length)],
+    color: COLOR_PALETTE[index % COLOR_PALETTE.length],
   }));
 
   return (

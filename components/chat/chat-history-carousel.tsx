@@ -37,7 +37,7 @@ export function ChatHistoryCarousel({ chatHistory }: ChatHistoryCarouselProps) {
 export function CharactersCarouselItem({ chat }: { chat: IChatMessageHistory }) {
   return (
     <motion.div whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.98 }} transition={{ type: "spring", stiffness: 300, damping: 20 }}>
-      <Link href={`/chat/${chat.character.id}`} className='w-full h-[200px] flex gap-x-3 bg-secondary rounded-2xl p-4'>
+      <Link href={`/chat/${chat.character.id}`} className='w-full h-60 flex gap-x-3 bg-secondary rounded-2xl p-4'>
         <CharactersCarouselItemImage chat={chat} />
         <motion.div
           className="w-full h-full flex flex-col gap-1 select-none"
@@ -65,7 +65,6 @@ export function CharactersCarouselItemImage({ chat }: { chat: IChatMessageHistor
         alt={chat.character.name}
         name={chat.character.name}
         variant='character'
-        className='aspect-square object-cover sm:object-contain'
       />
     </motion.div>
   )

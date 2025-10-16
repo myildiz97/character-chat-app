@@ -17,7 +17,7 @@ export default function CarouselSkeleton({ className }: CarouselSkeletonProps) {
       transition={{ duration: 0.4, ease: "easeOut" }}
       className={cn("w-full", className)}
     >
-      <div className="flex gap-4 overflow-hidden w-full h-[200px]">
+      <div className="flex gap-4 overflow-hidden w-full h-60">
         {items.map((_, index) => (
           <motion.div
             key={index}

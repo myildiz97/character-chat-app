@@ -3,6 +3,7 @@ import { Avatar, AvatarFallback } from '../ui/avatar';
 import { useUserContext } from '../context/user-context';
 import { CustomText } from '../ui/custom/custom-text';
 import Image from 'next/image';
+import { cn } from '@/lib/utils';
 
 interface IAvatarContainerProps {
   src?: string;
@@ -32,8 +33,8 @@ export function AvatarContainer({ src = "", alt = "", name = "", variant = 'defa
         fill={!width && !height}
         width={width}
         height={height}
-        className="aspect-square object-cover sm:object-contain"
-        unoptimized
+        className="object-cover rounded-3xl"
+        priority
       />
     )
   }
@@ -51,10 +52,10 @@ export function AvatarContainer({ src = "", alt = "", name = "", variant = 'defa
   }
 
   return (
-    <div className={`flex items-center justify-center gap-1 ${label.direction === 'column' ? 'flex-col' : 'flex-row'} ${className}`}>
+    <div className={`flex items-center justify-center gap-1  ${label.direction === 'column' ? 'flex-col' : 'flex-row'} ${className}`}>
       <Avatar className={sizes[size]}>
-        <AvatarImage src={avatarSrc} alt={avatarAlt}/>
-        <AvatarFallback>{avatarName}</AvatarFallback>
+        <AvatarImage src={avatarSrc} alt={avatarAlt} className={cn(sizes[size], 'object-cover')}/>
+        <AvatarFallback className={sizes[size]}>{avatarName}</AvatarFallback>
       </Avatar>
       {label.show && (
         <>

@@ -47,7 +47,7 @@ export function CharactersCarouselItem({ character }: { character: ICharacterDB 
     <motion.div whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.98 }} transition={{ type: "spring", stiffness: 300, damping: 20 }}>
       <Link
         href={`/chat/${character.id}`}
-        className="w-full h-[200px] flex justify-between gap-x-3 bg-secondary rounded-2xl p-4 shadow-sm hover:shadow-md transition-shadow duration-200"
+        className="w-full h-60 flex justify-between gap-x-3 bg-secondary rounded-2xl p-4 shadow-sm hover:shadow-md transition-shadow duration-200"
       >
         <CharactersCarouselItemImage character={character} />
         <motion.div
@@ -77,7 +77,7 @@ export function CharactersCarouselItemImage({ character }: { character: ICharact
         alt={character.name}
         name={character.name}
         variant='character'
-        className='aspect-square object-cover sm:object-contain'
+        className='aspect-square object-cover sm:object-contain rounded-3xl'
       />
     </motion.div>
   )
