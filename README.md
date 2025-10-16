@@ -1,36 +1,130 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Character Chat App
 
-## Getting Started
+A modern, real-time character chat application built with Next.js that allows users to interact with AI-powered characters. Users can select from various characters, engage in conversations, and maintain chat history.
 
-First, run the development server:
+## Features
+
+- **Character Selection**: Browse and select from a variety of AI characters
+- **Real-time Chat**: Instant messaging with AI characters powered by Groq
+- **Chat History**: Persistent conversation history with Supabase
+- **User Authentication**: Secure Google OAuth integration
+- **Responsive Design**: Mobile-first design with smooth animations
+- **Dark/Light Theme**: Theme switching support
+
+## Technologies Used
+
+### Frontend
+- **Next.js**
+- **React** 
+- **TypeScript**
+- **Tailwind CSS 4**
+- **shadcn/ui**
+- **Supabase**
+- **Framer Motion**
+- **Magic UI**
+- **Lodash.Debounce**
+- **Lucide React**
+- **React Icons**
+
+## Prerequisites
+
+Before you begin, ensure you have the following installed:
+- **Node.js** (version 18 or higher)
+- **npm** or **yarn**
+- **Git**
+
+## 🔧 Setup Instructions
+
+### 1. Clone the Repository
+
+```bash
+git clone https://github.com/myildiz97/character-chat-app.git
+cd character-chat-app
+```
+
+### 2. Install Dependencies
+
+```bash
+npm install
+# or
+yarn install
+```
+
+### 3. Environment Variables
+
+Create a `.env.local` file in the root directory and add the following environment variables:
+
+```env
+# Supabase Configuration
+NEXT_PUBLIC_SUPABASE_URL=https://dfjpiptlxlhrurvrdtuh.supabase.co
+NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImRmanBpcHRseGxocnVydnJkdHVoIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjAzNjQ5MjAsImV4cCI6MjA3NTk0MDkyMH0.GCAZhMczT9NE5RDtYS_22LS2aMnLdU8euFHvHTfaAWM
+NEXT_PUBLIC_APP_URL=http://localhost:3000
+
+# Groq Configuration
+GROQ_API_KEY=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
+```
+
+## How to Run Locally
+
+### Development Mode
 
 ```bash
 npm run dev
 # or
 yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+The application will be available at [http://localhost:3000](http://localhost:3000)
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### Production Build
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```bash
+# Build the application
+npm run build
+# or
+yarn build
 
-## Learn More
+# Start the production server
+npm start
+# or
+yarn start
+```
 
-To learn more about Next.js, take a look at the following resources:
+### Linting
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```bash
+npm run lint
+# or
+yarn lint
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Project Structure
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+```
+character-chat-app/
+├── app/                    # Next.js App Router
+│   ├── (app)/             # Route groups
+│   │   ├── characters/    # Character selection page
+│   │   └── chat/          # Chat interface
+│   ├── api/               # API routes
+│   │   ├── character/     # Character endpoints
+│   │   └── chat/          # Chat endpoints
+│   └── auth/              # Authentication routes
+├── components/            # React components
+│   ├── auth/              # Authentication components
+│   ├── character/         # Character-related components
+│   ├── chat/              # Chat interface components
+│   ├── layouts/           # Layout components
+│   ├── pages/             # Page components
+│   ├── providers/         # Context providers
+│   ├── shared/            # Shared components
+│   └── ui/                # UI components
+├── hooks/                 # Custom React hooks
+├── lib/                   # Utility libraries
+│   ├── actions/           # Server actions
+│   ├── constants/         # Application constants
+│   └── types/             # TypeScript type definitions
+├── utils/                 # Utility functions
+│   └── supabase/          # Supabase client configurations
+└── public/                # Static assets
+```

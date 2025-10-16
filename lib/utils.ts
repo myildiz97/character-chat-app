@@ -12,3 +12,20 @@ export function saveToLocalStorage(key: string, value: any) {
 export function getFromLocalStorage(key: string) {
   return JSON.parse(localStorage.getItem(key) || '[]');
 }
+
+interface IFormatTimeProps {
+  time: string;
+  options?: Intl.DateTimeFormatOptions;
+}
+export function formatTime({ time, options }: IFormatTimeProps) {
+  const defaultOptions: Intl.DateTimeFormatOptions = {
+    hour: '2-digit',
+    minute: '2-digit',
+    hour12: true,
+  }
+
+  return new Date(time).toLocaleTimeString('en-US', {
+    ...defaultOptions,
+    ...options,
+  })
+}

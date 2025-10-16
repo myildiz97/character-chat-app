@@ -1,12 +1,13 @@
 "use client"
 
 import { CustomCard } from '../ui/custom/custom-card'
+import { CustomText } from '../ui/custom/custom-text'
 import GoogleSignin from './google-signin'
 
 export function LoginCard() {
   const footer = (
     <div className='w-full flex items-center justify-center'>
-      <p className='text-xs text-center text-muted-foreground'>By continuing, you agree with the Terms and Privacy Policy</p>
+      <CustomText variant='span'>By continuing, you agree with the Terms and Privacy Policy</CustomText>
     </div>
   )
   return (

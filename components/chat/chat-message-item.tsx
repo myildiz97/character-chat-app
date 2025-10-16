@@ -1,8 +1,9 @@
-import { cn } from '@/lib/utils'
+import { cn, formatTime } from '@/lib/utils'
 import { IChatMessage } from '@/lib/types/chat'
 import { ICharacterDB } from '@/lib/types/character'
 import { useUserContext } from '../context/user-context'
 import LoadingThreeDotsJumping from '../shared/jumping-dots'
+import { CustomText } from '../ui/custom/custom-text'
 
 interface ChatMessageItemProps {
   message: IChatMessage;
@@ -41,14 +42,8 @@ const ChatMessageHeader = ({ message, isOwnMessage, character }: { message: ICha
     <div className={cn('flex items-center gap-2 text-xs px-3', {
       'justify-end flex-row-reverse': isOwnMessage,
     })}>
-      <span className={'font-medium'}>{name}</span>
-      <span className="text-foreground/50 text-xs">
-        {new Date(message.created_at).toLocaleTimeString('en-US', {
-          hour: '2-digit',
-          minute: '2-digit',
-          hour12: true,
-        })}
-      </span>
+      <CustomText variant='span' className='font-medium text-xs'>{name}</CustomText>
+      <CustomText variant='span' className='text-foreground/50 text-xs'>{formatTime({ time: message.created_at })}</CustomText>
     </div>
   )
 }

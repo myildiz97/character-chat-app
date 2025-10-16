@@ -13,6 +13,7 @@ import {
 import { logout } from '@/lib/actions/auth-actions'
 import { AvatarContainer } from '../shared/avatar-container'
 import { NAV_ITEMS } from '@/lib/constants/navbar'
+import { CustomText } from '../ui/custom/custom-text'
 
 export function BottomNavigation() {
   const pathname = usePathname();
@@ -40,7 +41,7 @@ export function BottomNavigation() {
                 }`}
               >
                 <Icon className="w-6 h-6" />
-                <span className="text-sm w-fit">{label}</span>
+                <CustomText variant='span' className='text-sm w-fit'>{label}</CustomText>
               </motion.div>
             </Link>
           )

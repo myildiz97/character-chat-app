@@ -11,6 +11,7 @@ import { CustomText } from '../ui/custom/custom-text';
 import { cn } from '@/lib/utils';
 import { CustomHeading } from '../ui/custom/custom-heading';
 import Link from 'next/link';
+import { AnimatedThemeToggler } from '../ui/animated-theme-toggler';
 
 export function ChatsDashboard() {
   const { characters, isLoading: charactersLoading } = useCharacters();
@@ -26,7 +27,10 @@ export function ChatsDashboard() {
           <CustomText variant='span'>Welcome back,</CustomText>
           <AvatarContainer variant='user' label={{ show: true, type: 'long' }} className='ml-2' />
         </div>
-        <SearchBar />
+        <div className='w-full flex items-center justify-end gap-2'>
+          <SearchBar />
+          <AnimatedThemeToggler duration={800} className='cursor-pointer' />
+        </div>
       </div>
       <div className={cn('w-full flex-col items-start gap-2', (forYouCharacters.length === 0 && !chatHistoryLoading && !charactersLoading) ? 'hidden' : 'flex')}>
         <CustomHeading variant='h2'>Try These</CustomHeading>
