@@ -7,6 +7,7 @@ export async function GET(
   request: Request,
   { params }: { params: Promise<{ characterId: string }> }
 ) {
+  // Check authentication
   const supabase = await createClient();
   const { data: { user }, error: authError } = await supabase.auth.getUser()
   if (authError || !user) {
@@ -18,6 +19,7 @@ export async function GET(
 
   const { characterId } = await params;
 
+  // Fetch the character by id
   const { data: character, error: characterError } = await supabase
     .from(CHARACTERS_TABLE)
     .select("*")

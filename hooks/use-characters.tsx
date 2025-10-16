@@ -23,6 +23,8 @@ export function useCharacters() {
   const fetchCharacters = useCallback(async () => {
     try {
       setIsLoading(true);
+      // Here since the characters are default for now, I stored them on local storage to fast loading them. 
+      // In real, we could use redis and invalidate the cache when a new character is created, updated or deleted.
       let charactersFromLocalStorage = getFromLocalStorage(LOCAL_STORAGE_KEY_CHARACTERS);
       if (charactersFromLocalStorage.length > 0) {
         if (searchQuery) {

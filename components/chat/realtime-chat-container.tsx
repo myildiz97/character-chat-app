@@ -25,10 +25,7 @@ export function RealtimeChatContainer({ characterId }: IRealtimeChatContainerPro
       try {
         setIsCharacterLoading(true);
         const endpoint= `${API_ROUTES.CHARACTERS}/${characterId}`
-        const response = await fetch(endpoint, {
-          method: "GET",
-          headers: { "Content-Type": "application/json" },
-        });
+        const response = await fetch(endpoint);
 
         if (!response.ok) {
           throw new Error("Failed to fetch character. Please refresh the page and try again.")
@@ -47,10 +44,7 @@ export function RealtimeChatContainer({ characterId }: IRealtimeChatContainerPro
       try {
         setIsMessagesLoading(true);
         const endpoint= `${API_ROUTES.CHAT}/${characterId}`
-        const response = await fetch(endpoint, {
-          method: "GET",
-          headers: { "Content-Type": "application/json" },
-        });
+        const response = await fetch(endpoint);
   
         if (!response.ok) {
           throw new Error("Failed to fetch messages. Please refresh the page and try again.")

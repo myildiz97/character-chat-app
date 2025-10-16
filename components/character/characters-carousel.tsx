@@ -77,7 +77,6 @@ export function CharactersCarouselItemImage({ character }: { character: ICharact
         alt={character.name}
         name={character.name}
         variant='character'
-        className='aspect-square object-cover sm:object-contain rounded-3xl'
       />
     </motion.div>
   )

@@ -33,7 +33,7 @@ export function AvatarContainer({ src = "", alt = "", name = "", variant = 'defa
         fill={!width && !height}
         width={width}
         height={height}
-        className="object-cover rounded-3xl"
+        className={cn("object-cover rounded-3xl", className)}
         priority
       />
     )

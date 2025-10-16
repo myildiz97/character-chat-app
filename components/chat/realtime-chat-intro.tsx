@@ -15,9 +15,9 @@ export const RealtimeChatIntro = ({ character }: IRealtimeChatIntroProps) => {
         alt={character.name}
         name={character.name}
         variant='character'
-        className='aspect-square object-cover sm:object-contain'
-        width={64}
-        height={64}
+        className='rounded-full! aspect-square!'
+        width={96}
+        height={96}
       />
       <CustomHeading variant='h1'>{character.name}</CustomHeading>
       <CustomText variant='p'>{character.short_description}</CustomText>

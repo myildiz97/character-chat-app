@@ -33,7 +33,6 @@ export function RealtimeChat({ character, messages: initialMessages = [], onMess
     return sortedMessages;
   }, [initialMessages, realtimeMessages]);
 
-
   useEffect(() => {
     scrollToBottom();
   }, [allMessages, scrollToBottom]);

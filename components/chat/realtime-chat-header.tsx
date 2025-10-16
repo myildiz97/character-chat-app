@@ -19,9 +19,9 @@ export const RealtimeChatHeader = ({ character }: IRealtimeChatHeaderProps) => {
             alt={character.name}
             name={character.name}
             variant='character'
-            className='aspect-square object-cover sm:object-contain'
-            width={40}
-            height={40}
+            className='rounded-full! aspect-square!'
+            width={48}
+            height={48}
           />
           <div className='w-full flex flex-col mx-auto'>
             <CustomHeading variant='h4'>{character.name}</CustomHeading>

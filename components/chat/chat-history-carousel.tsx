@@ -56,7 +56,7 @@ export function CharactersCarouselItem({ chat }: { chat: IChatMessageHistory }) 
 export function CharactersCarouselItemImage({ chat }: { chat: IChatMessageHistory }) {
   return (
     <motion.div 
-      className= 'relative w-full min-w-[40%] h-full flex items-center justify-center aspect-square rounded-3xl overflow-hidden'
+      className= 'relative w-full min-w-[40%] h-full flex items-center justify-center aspect-square rounded-xl overflow-hidden'
       whileHover={{ scale: 1.05 }}
       transition={{ type: "spring", stiffness: 250, damping: 20 }}
     >

@@ -4,6 +4,7 @@ import { createClient } from '@/utils/supabase/server';
 import { NextResponse } from 'next/server';
 
 export async function GET(request: Request) {
+  // Check authentication
   const supabase = await createClient();
   const { data: { user }, error: authError } = await supabase.auth.getUser()
   if (authError || !user) {
@@ -13,6 +14,7 @@ export async function GET(request: Request) {
     )
   }
 
+  // Fetch all available characters
   const { data: characters, error: charactersError } = await supabase
     .from(CHARACTERS_TABLE)
     .select("*")

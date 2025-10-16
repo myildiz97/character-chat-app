@@ -4,6 +4,7 @@ import { createClient } from '@/utils/supabase/server';
 import { NextResponse } from 'next/server';
 
 export async function GET(request: Request) {
+  // Get the character id from the query parameters
   const supabase = await createClient();
   const { data: { user }, error: authError } = await supabase.auth.getUser()
   if (authError || !user) {
@@ -13,10 +14,11 @@ export async function GET(request: Request) {
     )
   }
 
+  // Get the character id from the query parameters
   const { searchParams } = new URL(request.url);
-
   const characterId = searchParams.get("characterId");
 
+  // Fetch the message history for the given character id
   const { data: messageHistory, error: historyError } = await supabase
     .from(CHAT_MESSAGES_TABLE)
     .select("*")
@@ -46,6 +48,7 @@ export async function GET(request: Request) {
 }
 
 export async function POST(request: Request) {
+  // Check authentication
   const supabase = await createClient();
   const { data: { user }, error: authError } = await supabase.auth.getUser()
   if (authError || !user) {
@@ -55,9 +58,11 @@ export async function POST(request: Request) {
     )
   }
 
+  // Get the message data from the request body
   const { characterId, role, message } = await request.json();
 
   try {
+    // Save the new message to the database
     const { data, error } = await supabase
       .from(CHAT_MESSAGES_TABLE)
       .insert({

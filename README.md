@@ -10,10 +10,10 @@ A modern, real-time character chat application built with Next.js that allows us
 - **User Authentication**: Secure Google OAuth integration
 - **Responsive Design**: Mobile-first design with smooth animations
 - **Dark/Light Theme**: Theme switching support
+- **Metadata**: Metadata generation for SEO
 
 ## Technologies Used
 
-### Frontend
 - **Next.js**
 - **React** 
 - **TypeScript**
@@ -33,7 +33,7 @@ Before you begin, ensure you have the following installed:
 - **npm** or **yarn**
 - **Git**
 
-## 🔧 Setup Instructions
+## Setup Instructions
 
 ### 1. Clone the Repository
 

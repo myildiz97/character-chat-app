@@ -8,6 +8,7 @@ export async function GET(
   request: Request,
   { params }: { params: Promise<{ characterId: string }> }
 ) {
+  // Check authentication
   const supabase = await createClient();
   const { data: { user }, error: authError } = await supabase.auth.getUser()
   if (authError || !user) {
@@ -17,8 +18,10 @@ export async function GET(
     )
   }
 
+  // Get the character id from the parameters
   const { characterId } = await params;
 
+  // Fetch the message history for the given character id
   const { data: messageHistory, error: historyError } = await supabase
     .from(CHAT_MESSAGES_TABLE)
     .select("*")
@@ -36,6 +39,7 @@ export async function GET(
 
   let messages = messageHistory;
 
+  // If there are no messages, fetch the character data and initiate conversation by saving the opening message
   if (messages.length === 0) {
     const { data: character, error: characterError } = await supabase
       .from(CHARACTERS_TABLE)
@@ -94,6 +98,7 @@ export async function POST(
   request: Request, 
   { params }: { params: Promise<{ characterId: string }> }
 ) {
+  // Check authentication
   const supabase = await createClient();
   const { data: { user }, error: authError } = await supabase.auth.getUser()
   if (authError || !user) {
@@ -103,11 +108,13 @@ export async function POST(
     )
   }
 
+  // Get the character id from the parameters
   const { characterId } = await params;
 
   const { role, message } = await request.json();
 
   try {
+    // Save the new message to the database
     const { data, error } = await supabase
       .from(CHAT_MESSAGES_TABLE)
       .insert({
